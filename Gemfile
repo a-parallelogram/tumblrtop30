@@ -45,5 +45,7 @@ end
 
 gem 'rails_12factor', group: :production
 
+gem 'tumblr_client'
+
 ruby "2.2.1"
 

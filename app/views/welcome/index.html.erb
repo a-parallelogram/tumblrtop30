@@ -1,4 +1,21 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<h3>Enter a tumblr URL below to get top 30 posts.</h3>
+
+<%= form_tag("/", method: "get") do %>
+  <%= label_tag(:search, "Search for:") %>
+  <%= text_field_tag(:search) %>
+  <%= submit_tag("Search") %>
+<% end %>
+<br></br>
+<table border="1">
+<tr>
+<th>Note Count</th>
+<th>URL</th>
+<th>Date Posted</th>
+<% @finalArray.each do |post|%>
+<tr>
+<td><%= post["note_count"] %></td>
+  <td><a href='<%= post["image_permalink"] %>' target="_blank"><%=post["image_permalink"]%></td>
+ <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
+  </tr>
+<% end %>
+</table>
