@@ -1,5 +1,5 @@
 <div class="center">
-	<h1>Enter a Tumblr URL below to get top 30 posts.</h1>
+	<h2>Enter a Tumblr URL below to get top 30 images</h2>
 
 	<%= form_tag("/", method: "get") do %>
 	  <%= text_field_tag(:search, nil, :placeholder => "http://example.tumblr.com")%>
@@ -10,9 +10,9 @@
 		<table class="table">
 			<tr>
 				<th class="col-xs-1">Rank</th>
-				<th class="col-xs-1">Note Count</th>
+				<th class="col-xs-1">Notes</th>
 				<th class="col-xs-6">Image</th>
-				<th class="col-xs-1">Date Posted</th>
+				<th class="col-xs-1">Date</th>
 			</tr>
 			<% @finalArray.each_with_index do |post, index|%>
 				<tr>
