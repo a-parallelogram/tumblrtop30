@@ -6,7 +6,7 @@
 	  <%= submit_tag "Search", class: "btn btn-lg btn-primary" %>
 	<% end %>
 
-	<div class="table-responsive">
+	
 		<table class="table">
 			<tr>
 				<th>Standing</th>
@@ -20,12 +20,12 @@
 					<td><%= post["note_count"] %></td>
 					  <td>
 						  <a href='<%= post["short_url"] %>' target="_blank">
-						  	<img class="img-responsive col-xs-12" src="<%= post["photos"][0]["alt_sizes"][0]["url"] %>">
+						  	<img class="img-responsive" src="<%= post["photos"][0]["alt_sizes"][0]["url"] %>">
 						  </a>
 					  </td>
 					 <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
 				</tr>
 			<% end %>
 		</table>
-	</div>
+
 </div>
