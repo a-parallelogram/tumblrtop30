@@ -28,6 +28,8 @@ class WelcomeController < ApplicationController
 			
 			if !@posts.blank?
 				@finalArray = @posts.sort_by {|x| x["note_count"]}.reverse![0,30]
+			else
+				flash.now[:danger] = "Follow format: http://example.tumblr.com"
 			end
 		end
 
