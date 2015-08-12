@@ -1,21 +1,31 @@
-<h3>Enter a tumblr URL below to get top 30 posts.</h3>
+<div class="center">
+	<h1>Enter a tumblr URL below to get top 30 posts.</h1>
 
-<%= form_tag("/", method: "get") do %>
-  <%= label_tag(:search, "Search for:") %>
-  <%= text_field_tag(:search) %>
-  <%= submit_tag("Search") %>
-<% end %>
-<br></br>
-<table border="1">
-<tr>
-<th>Note Count</th>
-<th>URL</th>
-<th>Date Posted</th>
-<% @finalArray.each do |post|%>
-<tr>
-<td><%= post["note_count"] %></td>
-  <td><a href='<%= post["image_permalink"] %>' target="_blank"><%=post["image_permalink"]%></td>
- <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
-  </tr>
-<% end %>
-</table>
+	<%= form_tag("/", method: "get") do %>
+	  <%= text_field_tag(:search, nil, :placeholder => "http://example.tumblr.com")%>
+	  <%= submit_tag "Search", class: "btn btn-lg btn-primary" %>
+	<% end %>
+
+	<div class="table-responsive">
+		<table class="table">
+			<tr>
+				<th>Standing</th>
+				<th>Note Count</th>
+				<th>Image</th>
+				<th>Date Posted</th>
+			</tr>
+			<% @finalArray.each_with_index do |post, index|%>
+				<tr>
+					<td><%= index + 1 %></td>
+					<td><%= post["note_count"] %></td>
+					  <td>
+						  <a href='<%= post["short_url"] %>' target="_blank">
+						  	<img class="img-responsive" src="<%= post["photos"][0]["alt_sizes"][0]["url"] %>">
+						  </a>
+					  </td>
+					 <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

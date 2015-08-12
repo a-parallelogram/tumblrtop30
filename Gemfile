@@ -47,5 +47,7 @@ gem 'rails_12factor', group: :production
 
 gem 'tumblr_client'
 
+gem 'bootstrap-sass'
+
 ruby "2.2.1"
 
