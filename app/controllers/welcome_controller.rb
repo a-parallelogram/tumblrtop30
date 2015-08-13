@@ -4,6 +4,8 @@ class WelcomeController < ApplicationController
 		
 		if !params[:search].blank?
 
+			params[:search].downcase!
+
 			#Clear http from url link bc API doesn't accept it
 			query = params[:search].sub(/^https?\:\/\//, '').sub(/^www./,'')
 

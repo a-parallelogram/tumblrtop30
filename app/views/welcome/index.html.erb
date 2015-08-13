@@ -2,7 +2,7 @@
 	<h2>Enter a Tumblr URL below to get top 30 images</h2>
 
 	<%= form_tag("/", method: "get") do %>
-	  <%= text_field_tag(:search, nil, :placeholder => "http://example.tumblr.com")%>
+	  <%= url_field_tag(:search, nil, :placeholder => "http://example.tumblr.com")%>
 	  <%= submit_tag "Search", class: "btn btn-lg btn-primary" %>
 	<% end %>
 
