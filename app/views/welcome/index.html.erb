@@ -9,7 +9,7 @@
 
 		$("#structure_custom").click(function (){
 			$ ("#search").prop("type", "url");
-			$ ("#search").prop("placeholder", "http://willitbeard.tumblr.com");
+			$ ("#search").prop("placeholder", "e.g. http://haiku.nytimes.com/");
 		});
 
 
@@ -28,7 +28,7 @@
 </script>
 
 
-	<div class="page-header"><h2 class="center">Enter either the name or URL of a Tumblr blog to retrieve its top posts</h2></div>
+	<div class="page-header"><h2 class="center">Find your most popular Tumblr posts</br><small>Enter either the name or URL of a Tumblr blog to retrieve its top posts</small></h2></div>
 
 	<%= form_tag("/", method: "get") do %>
 	  <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", :inputmode => "url", class: "col-xs-12")%>
@@ -37,7 +37,7 @@
 	  <%= label_tag(:standard, "Name") %>
 	  <%= radio_button_tag(:structure, "standard", true) %>
 
-	  	<%= label_tag(:custom, "URL") %><a><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover click"></span></a>
+	  	<%= label_tag(:custom, "URL") %><a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
 	  	<%= radio_button_tag(:structure, "custom", @uri_structure == "custom") %>
 	  	 </div>
 		<div class: "col-xs-3 col-lg-3">
@@ -47,10 +47,10 @@
 		
 		
 
-
-	  <%= submit_tag "Search", class: "btn btn-lg btn-primary col-xs-12", id: "search-button" %>
-	<% end %>
-
+	   <%= button_tag(type: 'submit', class: "btn btn-lg btn-primary col-xs-12") do %>
+ 			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+		<% end %>
+	 	<% end %>
 	
 		<table class="table center">
 			<tr>
