@@ -68,7 +68,7 @@
 	  </label>
 
 
-	  <%= select_tag(:type, options_for_select([['Photo', 'photo'], ['All', 'all'], ['Text', 'text'] ,['Audio', 'audio'], ['Video', 'video']], :selected => @post_type)) %>
+	  <%= select_tag(:type, options_for_select([['Photo', 'photo'], ['All', 'all'], ['Text', 'text'] ,['Audio', 'audio'], ['Video', 'video']], :selected => @post_type, class: "form-control")) %>
 	  
 	
 </div>
@@ -106,14 +106,13 @@
 					  			<% end %>
 					  			<% end %>
 					  		<% elsif post["type"] == "video" %>
-					  		
-						  		<%= post["player"][0]["embed_code"].html_safe %>
-						  		<%= content_tag :a, "Go to Post", href: post["short_url"], target: "_blank" %>
-
+					  			<%= content_tag :a, href: post["short_url"], class: "thumbnail", target: "_blank" do%>
+						  			<%= content_tag :img, nil, src: post["thumbnail_url"] %>
+						  		<% end %>
 					  		<% elsif post["type"] == "audio" %>
-					  			
-					  			<%= post["player"].html_safe %>
-					  			<%= content_tag :a, "Go to Post", href: post["short_url"], target: "_blank" %>
+					  		<%= content_tag :a, "Go to Post", href: post["short_url"], class: "thumbnail", target: "_blank" do%>
+					  			<%= content_tag :img, nil, src: post["album_art"] %>
+					  			<% end %>
 					  		<% end %>
 						
 						  
