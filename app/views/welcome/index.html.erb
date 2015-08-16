@@ -2,14 +2,14 @@
 	$( document ).ready (function() {
 
 		$("#structure_standard").click(function (){
-			$ ("#search").prop("type", "text");
-			$ ("#search").prop("placeholder", "e.g. willitbeard");
-
+			$ ("#search").prop("placeholder", "willitbeard");
+			$("#tumblr-addon").show();
+			
 		});
 
 		$("#structure_custom").click(function (){
-			$ ("#search").prop("type", "url");
-			$ ("#search").prop("placeholder", "e.g. http://haiku.nytimes.com/");
+			$ ("#search").prop("placeholder", "haiku.nytimes.com");
+			$("#tumblr-addon").toggle("hidden");
 		});
 
 
@@ -31,22 +31,28 @@
 	<div class="page-header"><h2 class="center">Find your most popular Tumblr posts</br><small>Enter either the name or URL of a Tumblr blog to retrieve its top posts</small></h2></div>
 
 	<%= form_tag("/", method: "get") do %>
-	  <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", :inputmode => "url", class: "col-xs-12")%>
+	<div class="form-group">
+		<div class="input-group">
+		
+			<div class="input-group-addon">http://</div>
+		  <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", class: "form-control")%>
+		  
+			<div id="tumblr-addon" class="input-group-addon">.tumblr.com</div>
+		
+		</div>
+	  </div>
 
-	  <div class: "col-xs-6">
-	  <%= label_tag(:standard, "Name") %>
+	  <div class= "form-group">
+
+	  <%= label_tag(:standard, "Name", class: "radio-inline") %>
 	  <%= radio_button_tag(:structure, "standard", true) %>
 
-	  	<%= label_tag(:custom, "URL") %><a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
+	  	<%= label_tag(:custom, "URL", class: "radio-inline") %><a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
 	  	<%= radio_button_tag(:structure, "custom", @uri_structure == "custom") %>
-	  	 </div>
-		<div class: "col-xs-3 col-lg-3">
-		<%= label_tag(:reblogs, "Reblogs?") %>
+	
+		<%= label_tag(:reblogs, "Reblogs?", class: "checkbox-inline") %>
 	  <%= check_box_tag(:reblogs, 1, @show_reblogs) %>
-	   </div>
-		
-		
-
+		</div>
 	   <%= button_tag(type: 'submit', class: "btn btn-lg btn-primary col-xs-12") do %>
  			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 		<% end %>
