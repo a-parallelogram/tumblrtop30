@@ -53,5 +53,7 @@ gem 'tumblr_client'
 
 gem 'bootstrap-sass'
 
+gem 'delayed_job_active_record'
+
 ruby "2.2.1"
 
