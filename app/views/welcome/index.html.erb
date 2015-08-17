@@ -77,7 +77,7 @@
 		<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 		</button>
 	 	<% end %>
-	
+		<% if @finalArray.present? %>
 		<table class="table center">
 			<tr>
 				<th class="col-xs-1">Rank</th>
@@ -122,4 +122,5 @@
 				</tr>
 			<% end %>
 		</table>
+		<% end %>
 
