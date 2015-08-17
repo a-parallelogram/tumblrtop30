@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'blogs/show'
-
+  
+  resources :blogs, only: [:show]
   root 'welcome#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
