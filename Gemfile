@@ -55,5 +55,7 @@ gem 'bootstrap-sass'
 
 gem 'delayed_job_active_record'
 
+gem 'progress_job'
+
 ruby "2.2.1"
 
