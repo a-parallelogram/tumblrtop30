@@ -10,11 +10,13 @@ class BlogJob < ProgressJob::Base
 	end
 
 	def perform 
+		
 		# Create new client to make requests to Tumblr API
     	myClient = Tumblr::Client.new
     	posts = Array.new
 	    i = 0
 	    blog = Blog.find(@id)
+	    update_stage ("Searching " + 0.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
 	    steps = (@numberOfPosts/20.00)
 	    base = 100.00/steps
     	until i > @numberOfPosts
@@ -27,6 +29,7 @@ class BlogJob < ProgressJob::Base
 	    	end
 	    	update_progress(step: base)
 	    	i = i + 20
+	    	update_stage ("Searching " + i.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
     	end
    		
 		#Ignore reblogs if user doesn't want reblogs
@@ -39,7 +42,7 @@ class BlogJob < ProgressJob::Base
 	end
 
 	def max_run_time
-		300
+		30
 	end
 
 	def max_attempts
