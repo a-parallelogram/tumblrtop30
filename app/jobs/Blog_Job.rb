@@ -17,7 +17,7 @@ class BlogJob < ProgressJob::Base
 	    i = 0
 	    blog = Blog.find(@id)
 	    update_stage ("Searching " + 0.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
-	    steps = (@numberOfPosts/20.00)
+	    steps = (@numberOfPosts/50.00)
 	    base = 100.00/steps
     	until i > @numberOfPosts
     		#Increment by 20 bc need to increase offset for request. only 20 posts returned at a time.
@@ -28,7 +28,7 @@ class BlogJob < ProgressJob::Base
 	    		posts += (myClient.posts(@search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
 	    	end
 	    	update_progress(step: base)
-	    	i = i + 20
+	    	i = i + 50
 	    	update_stage ("Searching " + i.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
     	end
    		
@@ -36,13 +36,16 @@ class BlogJob < ProgressJob::Base
 		if !@show_reblogs
 			posts = posts.select {|x| x["reblogged_from_id"] == nil}
 		end
+
+		#Don't include posts that don't have note_count, or else error will be raised
 		#Sort by descending note count, and return first 30
-		blog.update(posts: posts.sort_by {|x| x["note_count"]}.reverse![0,30])
+		blog.update(posts: posts.delete_if {|x| x["note_count"].nil? }.sort_by {|x| x["note_count"] }.reverse![0,30])
+
 		update_progress_max(100)
 	end
 
 	def max_run_time
-		30
+		400
 	end
 
 	def max_attempts
