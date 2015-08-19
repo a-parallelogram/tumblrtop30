@@ -26,8 +26,8 @@
       	window.location.href = '<%= url_for(@blog) %>';
         // Job is no loger in database which means it finished successfuly
         $('.progress').removeClass('active');
-        $('.progress-bar').css('width', '100%').text('100%');
-        $('.progress-status').text('Successfully imported!');
+        $('.progress-bar').addClass("progress-bar-success").css('width', '100%').text('100%');
+        $('.progress-status').text('Successful! Redirecting now...');
         clearInterval(interval);
       }
     })
