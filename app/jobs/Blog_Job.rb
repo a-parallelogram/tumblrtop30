@@ -27,9 +27,9 @@ class BlogJob < ProgressJob::Base
 	    		temp_posts = (myClient.posts(@search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
 	    	end
 
-	    	update_progress(step: 50)
+	    	update_progress(step: 20)
 	    	#Increment by 50 bc need to increase offset for request. only 50 posts returned at a time.
-	    	i = i + 50
+	    	i = i + 20
 	    	update_stage (i.to_s + "/" + @numberOfPosts.to_s + " blog posts processed")
 	    	posts += temp_posts
 	    	break if temp_posts.blank?
