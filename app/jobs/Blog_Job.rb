@@ -1,7 +1,7 @@
 class BlogJob < ProgressJob::Base 
 
 	def initialize(id, post_type, search_query, show_reblogs, numberOfPosts)
-		super progress_max: 100
+		super progress_max: numberOfPosts
 		@id = id
 		@post_type = post_type
 		@search_query = search_query
@@ -17,19 +17,22 @@ class BlogJob < ProgressJob::Base
 	    i = 0
 	    blog = Blog.find(@id)
 	    update_stage ("Searching " + 0.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
-	    steps = (@numberOfPosts/50.00)
-	    base = 100.00/steps
-    	until i > @numberOfPosts
-    		#Increment by 20 bc need to increase offset for request. only 20 posts returned at a time.
+	    temp_posts = Array.new
+    	loop do
     		if (@post_type == "all")
-    			posts += (myClient.posts(@search_query, "reblog_info" => !@show_reblogs, "offset" => i ))["posts"]
+    			temp_posts = (myClient.posts(@search_query, "reblog_info" => !@show_reblogs, "offset" => i ))["posts"]
+
 	    	else
 	    	#Don't need reblog info (used to remove reblogs from array) if the user wants to see reblogs.
-	    		posts += (myClient.posts(@search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
+	    		temp_posts = (myClient.posts(@search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
 	    	end
-	    	update_progress(step: base)
+
+	    	update_progress(step: 50)
+	    	#Increment by 50 bc need to increase offset for request. only 50 posts returned at a time.
 	    	i = i + 50
-	    	update_stage ("Searching " + i.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
+	    	update_stage (i.to_s + "/" + @numberOfPosts.to_s + " blog posts processed")
+	    	posts += temp_posts
+	    	break if temp_posts.blank?
     	end
    		
 		#Ignore reblogs if user doesn't want reblogs
