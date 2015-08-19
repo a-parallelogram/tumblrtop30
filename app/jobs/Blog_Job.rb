@@ -50,7 +50,7 @@ class BlogJob < ProgressJob::Base
 	end
 
 	def max_run_time
-		400
+		600
 	end
 
 	def max_attempts

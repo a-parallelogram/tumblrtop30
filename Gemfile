@@ -57,5 +57,9 @@ gem 'delayed_job_active_record'
 
 gem 'progress_job'
 
+gem "workless"
+
+gem 'daemons'
+
 ruby "2.2.1"
 
