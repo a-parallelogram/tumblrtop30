@@ -1,4 +1,4 @@
-<div class="page-header"><h1>Top 30 Posts<span style="float:right;"><a href="<%= @blog.name %>" target="_blank"><%= @blog.name %></a></span></h1></div>
+<div class="page-header"><h1>Top 30 Posts<span style="float:right;"><%= link_to @blog.name, "http://#{@blog.name}", target: "_blank" %></span></h1></div>
 <h4><a href="<%= root_path %>">Go Home</a></h4>
 
 <% if @blog.posts.present? %>
