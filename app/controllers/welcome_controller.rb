@@ -1,8 +1,6 @@
 class WelcomeController < ApplicationController
 	def index
-		
-		@finalArray = Array.new
-		
+
 		@search_query = params[:search]
 		@uri_structure = params[:structure]
 		@post_type = params[:type]
@@ -69,11 +67,6 @@ class WelcomeController < ApplicationController
 				return
 			end
 		end
-
-	    respond_to do |format|
-	      format.html # index.html.erb
-	      format.json { render json: @finalArray }
-	    end
 	end
 
 	def format_uri (uri)

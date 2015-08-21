@@ -1,81 +1,8 @@
-<script type="text/javascript">
-	$( document ).ready (function() {
 
-		$("#name-radio").click(function (){
-			$ ("#search").prop("placeholder", "willitbeard");
-			$("#tumblr-addon").show();
-			
-		});
-
-		$("#url-radio").click(function (){
-			$ ("#search").prop("placeholder", "haiku.nytimes.com");
-			$("#tumblr-addon").hide();
-		});
-
-
-		//Makes sure textbox type is set properly depending on last search
-		if ($("#name-radio").prop("checked")){
-			$("#name-radio").click();
-		}
-		else{
-			$("#url-radio").click();
-		}
-
-	  $('[data-toggle="popover"]').popover()
-
-	  
-	});
-</script>
 
 
 	<div class="page-header"><h2 class="center">Find your most popular Tumblr posts</br><small>Enter the name or URL of a Tumblr blog to retrieve its top posts</small></h2></div>
 
-	<%= form_tag("/", method: "get") do %>
-	<div class="form-group">
-		<div class="input-group">
-		
-			<div class="input-group-addon">http://</div>
-		  <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", class: "form-control")%>
-		  
-			<div id="tumblr-addon" class="input-group-addon">.tumblr.com</div>
-		
-		</div>
-	  </div>
-
-	  <div class= "form-group">
-
-	  <label class="radio-inline">
-	  <input type="radio" id="name-radio" name="structure" value="standard" checked="checked"> Name
-	  </label>
-
-	  <label class="radio-inline">
-	  <input type="radio" id="url-radio" name="structure" value="custom" 
-	  <% if @uri_structure == "custom" %>
-	   checked="checked"
-	   <%end %>
-
-	  >
-	  URL
-	  <a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span id="url-question" class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
-	  </label>
-
-	<label class="checkbox-inline">
-	  <input type="checkbox" name="reblogs" value="1"
-	  <% if @show_reblogs %>
-	   checked="checked"
-	   <%end %>
-	   > Reblogs?
-	  </label>
-</div>
-<div class="form-group">
-
-	  <%= select_tag :type, options_for_select([['Photo', 'photo'], ['Text', 'text'] , ['Quote', 'quote'], ['Link', 'link'], ['Chat', 'chat'], ['Audio', 'audio'], ['Video', 'video'], ['All', 'all'] ]), :selected => @post_type, class: "form-control" %>
-	  
-	
-</div>
-		<button type="submit" class="btn btn-lg btn-primary col-xs-12">
-		<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-		</button>
-	 	<% end %>
+	<%= render 'layouts/search' %>
 		
 
