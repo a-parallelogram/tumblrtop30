@@ -1,5 +1,6 @@
 class BlogsController < ApplicationController
 	before_action :set_blog, only: [:show, :waiting, :position_in_queue]
+  
   def show
   end
 
@@ -16,7 +17,7 @@ class BlogsController < ApplicationController
   end
 
   private
-  def set_blog
-  	@blog = Blog.find(params[:id])
-  end
+    def set_blog
+    	@blog = Blog.find(params[:id])
+    end
 end

@@ -26,7 +26,7 @@ class BlogJob < ProgressJob::Base
 	    i = 0
 	    temp_posts = Array.new
     	loop do
-    		if (@post_type == "all")
+    		if @post_type == "all"
     			temp_posts = (myClient.posts(search_query, "reblog_info" => !show_reblogs, "offset" => i ))["posts"]
 
 	    	else

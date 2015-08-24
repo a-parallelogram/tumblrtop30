@@ -24,69 +24,69 @@ class WelcomeController < ApplicationController
 	end
 
 	private
-	def format_uri (uri)
-		uri = URI.parse(uri)
-		if(uri.scheme)
-		    uri.host
-		else
-			uri.to_s
-		end
-	end
-
-	#http://stackoverflow.com/questions/5331014/check-if-given-string-is-an-url
-	def is_uri_valid?(string)
-	  uri = URI.parse(string)
-	  %w( http https ).include?(uri.scheme)
-	rescue URI::BadURIError
-	  false
-	rescue URI::InvalidURIError
-	  false
-	end
-
-	def blog_is_valid?
-		@search_query.downcase!
-		@uri_structure.downcase!
-
-		if @uri_structure == "standard"
-			@search_query = @search_query + ".tumblr.com"
-			@api_url = "http://api.tumblr.com/v2/blog/#{@search_query}/info"
-
-			if is_uri_valid? (@api_url)
-				myClient = Tumblr::Client.new
-
-			    response = myClient.get(@api_url)
-
-			    #If blog is found, then "blog" key will be present
-			    if response["blog"].present?
-			    	@numberOfPosts = response["blog"]["posts"]
-					return true
-				else
-					flash.now[:danger] = "Blog could not be found"
-				end
+		def format_uri (uri)
+			uri = URI.parse(uri)
+			if(uri.scheme)
+			    uri.host
 			else
-				flash.now[:danger] = "Invalid blog name"
+				uri.to_s
 			end
-		elsif @uri_structure == "custom"
-			@search_query = "http://" + @search_query
-			if is_uri_valid? (@search_query)
-				@search_query = format_uri (@search_query)
+		end
+
+		#http://stackoverflow.com/questions/5331014/check-if-given-string-is-an-url
+		def is_uri_valid?(string)
+		  uri = URI.parse(string)
+		  %w( http https ).include?(uri.scheme)
+		rescue URI::BadURIError
+		  false
+		rescue URI::InvalidURIError
+		  false
+		end
+
+		def blog_is_valid?
+			@search_query.downcase!
+			@uri_structure.downcase!
+
+			if @uri_structure == "standard"
+				@search_query = @search_query + ".tumblr.com"
 				@api_url = "http://api.tumblr.com/v2/blog/#{@search_query}/info"
 
-				myClient = Tumblr::Client.new
+				if is_uri_valid? @api_url
+					myClient = Tumblr::Client.new
 
-			    response = myClient.get(@api_url)
+				    response = myClient.get(@api_url)
 
-			    #If blog is found, then "blog" key will be present
-			    if response["blog"].present?
-			    	@numberOfPosts = response["blog"]["posts"]
-					return true
+				    #If blog is found, then "blog" key will be present
+				    if response["blog"].present?
+				    	@numberOfPosts = response["blog"]["posts"]
+						return true
+					else
+						flash.now[:danger] = "Blog could not be found"
+					end
 				else
-					flash.now[:danger] = "Blog could not be found"
+					flash.now[:danger] = "Invalid blog name"
 				end
-			else
-				flash.now[:danger] = "Invalid URL"
+			elsif @uri_structure == "custom"
+				@search_query = "http://" + @search_query
+				if is_uri_valid? @search_query
+					@search_query = format_uri (@search_query)
+					@api_url = "http://api.tumblr.com/v2/blog/#{@search_query}/info"
+
+					myClient = Tumblr::Client.new
+
+				    response = myClient.get(@api_url)
+
+				    #If blog is found, then "blog" key will be present
+				    if response["blog"].present?
+				    	@numberOfPosts = response["blog"]["posts"]
+						return true
+					else
+						flash.now[:danger] = "Blog could not be found"
+					end
+				else
+					flash.now[:danger] = "Invalid URL"
+				end
 			end
+			return false
 		end
-		return false
-	end
 end
