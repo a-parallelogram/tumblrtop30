@@ -9,6 +9,10 @@ class BlogsController < ApplicationController
   end
 
   def waiting
+    #In case user clicks back button on show page, direct them back to show page
+    unless @blog.posts.blank? && Delayed::Job.find_by(id: @blog.job_id) != nil
+      redirect_to @blog
+    end
   end
 
   private

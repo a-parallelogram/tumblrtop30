@@ -1,5 +1,4 @@
 <script type="text/javascript">
-<% if @blog.posts.blank? && Delayed::Job.find_by(id: @blog.job_id) != nil %>
 	 
 	var interval = setInterval(function(){
     $.ajax({
@@ -47,4 +46,3 @@
 </div>
 <p class="bg-info" style="padding:15px;border-radius:5px;">*This operation may not take as long as indicated, depending on the type of post you wanted filtered. If 
 you chose "All posts", then all of this blog's posts will be processed.</p>
-<% end %>
