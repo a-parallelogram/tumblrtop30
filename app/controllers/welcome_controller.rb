@@ -2,7 +2,6 @@ class WelcomeController < ApplicationController
 	AVAILABLE_TYPES = %w(photo text quote link chat audio video all)
 	
 	def index
-		
 		@search_query = params[:search]
 		@uri_structure = params[:structure]
 		@post_type = params[:type]
@@ -15,7 +14,7 @@ class WelcomeController < ApplicationController
 		
 		#check if the user has provided a URL
 		if @search_query.present? && @uri_structure.present? && AVAILABLE_TYPES.include?(@post_type)
-			if input_is_valid?
+			if blog_is_valid?
 				blog = Blog.create(name: @search_query)
 				blog.get_posts(@post_type, @show_reblogs, @numberOfPosts)
 				redirect_to waiting_path(blog)
@@ -44,7 +43,7 @@ class WelcomeController < ApplicationController
 	  false
 	end
 
-	def input_is_valid?
+	def blog_is_valid?
 		@search_query.downcase!
 		@uri_structure.downcase!
 

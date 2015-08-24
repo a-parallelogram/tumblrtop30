@@ -2,19 +2,20 @@
 <div class="page-header"><h1><%= link_to @blog.name, "http://#{@blog.name}", target: "_blank" %></h1></div>
 
 <% if @blog.posts.present? %>
-		<table class="table center">
+		<table class="table">
 		<caption>TOP 30</caption>
 			<tr>
 				<th class="col-xs-1">Rank</th>
 				<th class="col-xs-1">Notes</th>
-				<th class="col-xs-9">Post</th>
+				<th class="col-xs-8">Post</th>
+				<th class="col-xs-1">Type</th>
 				<th class="col-xs-1">Date</th>
 			</tr>
 			<% @blog.posts.each_with_index do |post, index|%>
 				<tr>
 					<td><%= index + 1 %></td>
 					<td><%= post["note_count"] %></td>
-					  <td>
+					  <td class="center">
 					  
 					  
 					  		<% if post["type"] == "photo" %>
@@ -72,6 +73,7 @@
 					  		<% end %>
 						
 					  </td>
+					  <td><%= post["type"] %></td>
 					 <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
 				</tr>
 			<% end %>
