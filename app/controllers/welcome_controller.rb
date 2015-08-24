@@ -15,8 +15,8 @@ class WelcomeController < ApplicationController
 		#check if the user has provided a URL
 		if @search_query.present? && @uri_structure.present? && AVAILABLE_TYPES.include?(@post_type)
 			if blog_is_valid?
-				blog = Blog.create(name: @search_query)
-				blog.get_posts(@post_type, @show_reblogs, @numberOfPosts)
+				blog = Blog.create(name: @search_query, post_type: @post_type, reblogs: @show_reblogs)
+				blog.get_posts(@numberOfPosts)
 				redirect_to waiting_path(blog)
 				return
 			end
