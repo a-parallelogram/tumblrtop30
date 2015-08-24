@@ -1,43 +1,36 @@
 <script type="text/javascript">
 <% if @blog.posts.blank? && Delayed::Job.find_by(id: @blog.job_id) != nil %>
 	 
-
-	 
-	 //$("#queue-number").text("You are "  + "in line");
-	 var interval;
-	 
-  interval = setInterval(function(){
+	var interval = setInterval(function(){
     $.ajax({
-      url: '/progress-job/' + <%= @blog.job_id %>,
-      success: function(job){
+        url: '/progress-job/' + <%= @blog.job_id %>,
+        success: function(job){
 
-        var stage, progress;
-        progress = Math.floor(job.progress_current / job.progress_max * 100);
-        stage = job.progress_stage;
+          var stage, progress;
+          progress = Math.floor(job.progress_current / job.progress_max * 100);
+          stage = job.progress_stage;
 
-        // In job stage
-	    	if (progress !== 0 && stage != null){
-	    		$('.progress-status').text(stage);
-          $('.progress-bar').css('width', progress + '%').text(progress + '%');
-	    	}
-	    	
-      },
-      error: function(){
-      	window.location.href = '<%= url_for(@blog) %>';
-        // Job is no loger in database which means it finished successfuly
-        $('.progress').removeClass('active');
-        $('.progress-bar').addClass("progress-bar-success").css('width', '100%').text('100%');
-        $('.progress-status').text('Successful! Redirecting now...');
-        clearInterval(interval);
-      }
+          // In job stage
+  	    	if (progress !== 0 && stage != null){
+  	    		$('.progress-status').text(stage);
+            $('.progress-bar').css('width', progress + '%').text(progress + '%');
+  	    	}
+  	    	
+        },
+        error: function(){
+        	
+          // Job is no loger in database which means it finished successfuly
+          $('.progress-bar').removeClass("progress-bar-info").addClass("progress-bar-success").css('width', '100%').text('100%');
+          $('.progress-status').removeClass("text-info").addClass("text-success").text('Successful! Redirecting now...');
+          clearInterval(interval);
+          window.location.href = '<%= url_for(@blog) %>';
+        }
     })
     $.ajax("<%= position_path(@blog.id) %>")
-	 	.done(function(number){
-	 		$('#queue-number').text(number);
-	 	})
-	 	.fail(function(){
-	 	});
-  },2000);
+	 	   .done(function(number){
+	 		  $('#queue-number').text(number);
+    });
+  },1000);
 
 
 </script>
@@ -47,11 +40,11 @@
   <div class="progress-status text-info">Please be patient...</div>
 
   <div class="progress">
-    <div class="progress-bar col-xs-12" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2.5em;">
+    <div class="progress-bar progress-bar-info col-xs-12" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2.5em;">
       0.00%
     </div>
   </div>
 </div>
-<p class="text-info">*This operation may not take as long as indicated, depending on the type of post you wanted filtered. If 
+<p class="bg-info" style="padding:15px;border-radius:5px;">*This operation may not take as long as indicated, depending on the type of post you wanted filtered. If 
 you chose "All posts", then all of this blog's posts will be processed.</p>
 <% end %>
