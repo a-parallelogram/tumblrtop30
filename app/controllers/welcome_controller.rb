@@ -62,7 +62,7 @@ class WelcomeController < ApplicationController
 
 			if input_is_valid
 				blog = Blog.create(name: @search_query)
-				blog.get_posts(@post_type, @search_query, @show_reblogs, @numberOfPosts)
+				blog.get_posts(@post_type, @show_reblogs, @numberOfPosts)
 				redirect_to waiting_path(blog)
 				return
 			end

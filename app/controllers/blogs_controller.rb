@@ -9,9 +9,6 @@ class BlogsController < ApplicationController
   end
 
   def waiting
-      respond_to do |format|
-        format.html
-      end
   end
 
   private

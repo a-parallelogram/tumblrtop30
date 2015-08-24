@@ -1,10 +1,9 @@
 class BlogJob < ProgressJob::Base 
 
-	def initialize(id, post_type, search_query, show_reblogs, numberOfPosts)
+	def initialize(id, post_type, show_reblogs, numberOfPosts)
 		super progress_max: numberOfPosts
 		@id = id
 		@post_type = post_type
-		@search_query = search_query
 		@show_reblogs = show_reblogs
 		@numberOfPosts = numberOfPosts
 	end
@@ -16,15 +15,16 @@ class BlogJob < ProgressJob::Base
     	posts = Array.new
 	    i = 0
 	    blog = Blog.find(@id)
+	    search_query = blog.name
 	    update_stage ("Searching " + 0.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
 	    temp_posts = Array.new
     	loop do
     		if (@post_type == "all")
-    			temp_posts = (myClient.posts(@search_query, "reblog_info" => !@show_reblogs, "offset" => i ))["posts"]
+    			temp_posts = (myClient.posts(search_query, "reblog_info" => !@show_reblogs, "offset" => i ))["posts"]
 
 	    	else
 	    	#Don't need reblog info (used to remove reblogs from array) if the user wants to see reblogs.
-	    		temp_posts = (myClient.posts(@search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
+	    		temp_posts = (myClient.posts(search_query, :type => @post_type, "reblog_info" => !@show_reblogs, "offset" => i ) )["posts"]
 	    	end
 
 	    	
