@@ -1,6 +1,8 @@
 class WelcomeController < ApplicationController
+	AVAILABLE_TYPES = %w(photo text quote link chat audio video all)
+	
 	def index
-
+		
 		@search_query = params[:search]
 		@uri_structure = params[:structure]
 		@post_type = params[:type]
@@ -10,9 +12,9 @@ class WelcomeController < ApplicationController
 		else
 			@show_reblogs = false
 		end
-
+		
 		#check if the user has provided a URL
-		if @search_query.present? && @uri_structure.present?
+		if @search_query.present? && @uri_structure.present? && AVAILABLE_TYPES.include?(@post_type)
 
 			@search_query.downcase!
 			@uri_structure.downcase!
