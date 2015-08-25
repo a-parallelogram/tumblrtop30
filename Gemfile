@@ -61,5 +61,7 @@ gem "workless"
 
 gem 'daemons'
 
+gem "active_attr"
+
 ruby "2.2.1"
 
