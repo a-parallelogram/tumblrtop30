@@ -55,6 +55,7 @@ class WelcomeController < ApplicationController
 				@api_url = "http://api.tumblr.com/v2/blog/#{@search_query}/info"
 			elsif @uri_structure == "custom"
 				@search_query = "http://" + @search_query
+				#Must check if uri is valid before calling the format uri method
 				if is_uri_valid? @search_query
 					@search_query = format_uri (@search_query)
 				else
@@ -64,17 +65,22 @@ class WelcomeController < ApplicationController
 			end
 
 			@api_url = "http://api.tumblr.com/v2/blog/#{@search_query}/info"
+			if is_uri_valid? @api_url
+				myClient = Tumblr::Client.new
+			    response = myClient.get(@api_url)
 
-			myClient = Tumblr::Client.new
-		    response = myClient.get(@api_url)
-
-		    #If blog is found, then "blog" key will be present
-		    if response["blog"].present?
-		    	@numberOfPosts = response["blog"]["posts"]
-				return true
+			    #If blog is found, then "blog" key will be present
+			    if response["blog"].present?
+			    	@numberOfPosts = response["blog"]["posts"]
+					return true
+				else
+					flash.now[:danger] = "Blog could not be found"
+					return false
+				end
 			else
-				flash.now[:danger] = "Blog could not be found"
+				flash.now[:danger] = "Invalid blog name"
 				return false
 			end
+			
 		end
 end
