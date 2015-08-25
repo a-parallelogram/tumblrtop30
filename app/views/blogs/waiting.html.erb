@@ -25,7 +25,7 @@
           window.location.href = '<%= url_for(@blog) %>';
         }
     })
-    $.ajax("<%= position_path(@blog.id) %>")
+    $.ajax("<%= position_in_queue_blog_path(@blog) %>")
 	 	   .done(function(number){
 	 		  $('#queue-number').text(number);
     });

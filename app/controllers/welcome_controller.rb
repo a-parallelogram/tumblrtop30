@@ -17,7 +17,7 @@ class WelcomeController < ApplicationController
 			if blog_is_valid?
 				blog = Blog.create(name: @search_query, post_type: @post_type, reblogs: @show_reblogs)
 				blog.get_posts(@numberOfPosts)
-				redirect_to waiting_path(blog)
+				redirect_to waiting_blog_path(blog)
 				return
 			end
 		end
