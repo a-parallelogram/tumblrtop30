@@ -6,6 +6,7 @@ class Query
 	validates :query, presence: { :message => "Search field is empty"}
 
 	#Returns true if blog url leads to a valid blog, otherwise returns false
+	#Check if query is valid before executing this method
 	def does_blog_exist?
 		query.downcase!
 		structure.downcase!
