@@ -12,7 +12,6 @@ class Query
 		structure.downcase!
 		if structure == "standard"
 			self.query = query + ".tumblr.com"
-			self.api_url = "http://api.tumblr.com/v2/blog/#{query}/info"
 		elsif structure == "custom"
 			self.query = "http://" + query
 			#Must check if uri is valid before calling the format uri method
@@ -24,7 +23,7 @@ class Query
 			end
 		end
 
-		@api_url = "http://api.tumblr.com/v2/blog/#{query}/info"
+		self.api_url = "http://api.tumblr.com/v2/blog/#{query}/info"
 		if is_uri_valid? api_url
 			myClient = Tumblr::Client.new
 		    response = myClient.get(api_url)
