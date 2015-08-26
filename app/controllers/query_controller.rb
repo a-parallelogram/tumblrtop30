@@ -12,9 +12,9 @@ class QueryController < ApplicationController
 			q.errors.each do |attr, msg|
 				error_message += msg + " "
 			end
-			puts error_message
 			flash[:danger] = error_message
-			redirect_to root_path
+			#Remember search parameters so user doesn't need to reenter them
+			redirect_to :controller => 'welcome', :action => 'index', :uri_structure => params[:structure], :post_type => params[:post_type], :show_reblogs => params[:show_reblogs]
 		end
 	end
 	
