@@ -34,7 +34,7 @@ $(document).ready(function() {
 });
 </script>
 <div style="margin-top:20px;">
-<%= form_tag("/", method: "get") do %>
+<%= form_tag(search_url, method: "post") do %>
     <div class="form-group">
         <div class="input-group">
             <div class="input-group-addon">http://</div>
@@ -63,13 +63,13 @@ $(document).ready(function() {
 	                    <a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span id="url-question" class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
 	            </label>
 	            <label class="checkbox-inline">
-	                <input type="checkbox" name="reblogs" value="1" <% if @show_reblogs %> checked="checked"
+	                <input type="checkbox" name="show_reblogs" value="true" <% if @show_reblogs %> checked="checked"
 	                <%end %>
 	                    > Reblogs?
 	            </label>
 	        </div>
 	        <div class="form-group">
-	            <%= select_tag :type, options_for_select(AVAILABLE_TYPES, :selected => @post_type), class: "form-control" %>
+	            <%= select_tag :post_type, options_for_select(AVAILABLE_TYPES, :selected => @post_type), class: "form-control" %>
 	        </div>
         </div>
     </div>

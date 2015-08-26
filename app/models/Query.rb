@@ -1,15 +1,12 @@
 class Query
 	include ActiveAttr::Model
-	attr_accessor :query, :structure, :blog_url, :api_url, :post_type, :number_of_posts
-	validates :post_type, :inclusion => { :in => AVAILABLE_TYPES, :message => "not in types" }
-	validates :query, :presence => true
-	validates :structure, :presence => true
-	validate :blog_is_valid?
-
-
+	attr_accessor :query, :structure, :blog_url, :api_url, :post_type, :number_of_posts, :show_reblogs
+	validates :post_type, :inclusion => { :in => AVAILABLE_TYPES, :message => "Not a correct post type" }
+	validates :structure, :inclusion => { :in => %w{standard custom}, :message => "Only normal and custom URI structures are allowed" }
+	validates :query, presence: { :message => "Search field is empty"}
 
 	#Returns true if blog url leads to a valid blog, otherwise returns false
-	def blog_is_valid?
+	def does_blog_exist?
 		query.downcase!
 		structure.downcase!
 		if structure == "standard"
@@ -22,7 +19,7 @@ class Query
 				self.query = format_uri (query)
 			else
 				errors.add(:query, "Invalid URL")
-				return
+				return false
 			end
 		end
 
@@ -34,20 +31,21 @@ class Query
 		    #If blog is found, then "blog" key will be present
 		    if response["blog"].present?
 		    	self.number_of_posts = response["blog"]["posts"]
-				return
+				return true
 			else
 				errors.add(:query, "Blog could not be found")
-				return
+				return false
 			end
 		else
 			errors.add(:query, "Invalid blog name")
-			return
+			return false
 		end
 		
 	end
 
 	private
-		#Returns a blog link that is compatible with the Tumblr API
+		#Returns a blog link that is compatible with the Tumblr API.
+		#must call is_uri_valid? on the uri prior to calling this method
 		def format_uri (uri)
 			uri = URI.parse(uri)
 			if(uri.scheme)
