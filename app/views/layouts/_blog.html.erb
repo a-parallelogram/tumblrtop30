@@ -1,11 +1,11 @@
 <% @blog.posts.each_with_index do |post, index|%>
-	<tr>
-		<td><%= index + 1 %></td>
-		<td><%= post["note_count"] %></td>
-		<td class="center">
-	  		<%= post_renderer(post) %>
-		</td>
-		<td><%= post["type"] %></td>
-		<td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
-	</tr>
+  <tr>
+    <td><%= index + 1 %></td>
+    <td><%= post["note_count"] %></td>
+    <td class="center">
+      <%= post_renderer(post) %>
+    </td>
+    <td><%= post["type"] %></td>
+    <td><%= Time.at(post["timestamp"]).strftime('%m/%d/%Y') %></td>
+  </tr>
 <% end %>

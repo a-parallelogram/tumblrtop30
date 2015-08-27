@@ -1,87 +1,86 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-    $("#name-radio").click(function() {
-        $("#search").prop("placeholder", "willitbeard");
-        $("#tumblr-addon").show();
-    });
+  $("#name-radio").click(function() {
+    $("#search").prop("placeholder", "willitbeard");
+    $("#tumblr-addon").show();
+  });
 
-    $("#url-radio").click(function() {
-        $("#search").prop("placeholder", "haiku.nytimes.com");
-        $("#tumblr-addon").hide();
-    });
-
-
-    //Makes sure textbox type is set properly depending on last search
-    if ($("#name-radio").prop("checked")) {
-        $("#name-radio").click();
-    } else {
-        $("#url-radio").click();
-    }
-
-    $('[data-toggle="popover"]').popover()
+  $("#url-radio").click(function() {
+    $("#search").prop("placeholder", "haiku.nytimes.com");
+    $("#tumblr-addon").hide();
+  });
 
 
-    //http://stackoverflow.com/questions/18147338/twitter-bootstrap-3-0-icon-change-on-collapse
-    $('#options-box').on('shown.bs.collapse', function() {
-        $("#options-button span").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
-    });
+  //Makes sure textbox type is set properly depending on last search
+  if ($("#name-radio").prop("checked")) {
+    $("#name-radio").click();
+  } else {
+    $("#url-radio").click();
+  }
 
-    $('#options-box').on('hidden.bs.collapse', function() {
-        $("#options-button span").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
-    });
+  $('[data-toggle="popover"]').popover()
 
-    //prevent URL option from being selected when question mark is clicked
-    $("#url-question").click(function(event){event.preventDefault();})
+
+  //http://stackoverflow.com/questions/18147338/twitter-bootstrap-3-0-icon-change-on-collapse
+  $('#options-box').on('shown.bs.collapse', function() {
+    $("#options-button span").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
+  });
+
+  $('#options-box').on('hidden.bs.collapse', function() {
+    $("#options-button span").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
+  });
+
+  //prevent URL option from being selected when question mark is clicked
+  $("#url-question").click(function(event){event.preventDefault();})
 
 });
 </script>
 <div style="margin-top:20px;">
 <%= form_tag(search_url, method: "post") do %>
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon">http://</div>
-            <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", class: "form-control")%>
-                <div id="tumblr-addon" class="input-group-addon">.tumblr.com</div>
-        </div>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon">http://</div>
+      <%= text_field_tag(:search, nil, :placeholder => "e.g. willitbeard", class: "form-control")%>
+        <div id="tumblr-addon" class="input-group-addon">.tumblr.com</div>
     </div>
-    <button type="submit" id="search-button" title="search" class="btn btn-primary col-xs-12">
-        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+  </div>
+  <button type="submit" id="search-button" title="search" class="btn btn-primary col-xs-12">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+  </button>
+  <div class="center">
+    <button id="options-button" class="btn btn-link" type="button" data-toggle="collapse" data-target="#options-box" aria-expanded="false">
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
     </button>
-    <div class="center">
-        <button id="options-button" class="btn btn-link" type="button" data-toggle="collapse" data-target="#options-box" aria-expanded="false">
-            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-        </button>
+  </div>
+  <div id="options-box" class="collapse panel panel-primary">
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="radio-inline">
+          <input type="radio" id="name-radio" name="structure" value="standard" checked="checked"> Name
+        </label>
+        <label class="radio-inline">
+          <input type="radio" id="url-radio" name="structure" value="custom"
+          <% if params[:uri_structure] == "custom" %> checked="checked"
+          <% end %>
+            > URL
+            <a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com"
+             data-trigger="hover focus" data-placement="bottom">
+              <span id="url-question" class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span>
+            </a>
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="show_reblogs" value="true"
+          <% if params[:show_reblogs] %> checked="checked"<% end %>
+          > Reblogs?
+        </label>
+      </div>
+      <div class="form-group">
+        <%= select_tag "post_types", options_for_select(AVAILABLE_TYPES.collect { |a| [a.capitalize, a] },
+         params[:post_types].present? ? params[:post_types] : "photo"),
+          multiple:true, class:"form-control" %>
+      </div>
     </div>
-    <div id="options-box" class="collapse panel panel-primary">
-		<div class="panel-body">
-	        <div class="form-group">
-	            <label class="radio-inline">
-	                <input type="radio" id="name-radio" name="structure" value="standard" checked="checked"> Name
-	            </label>
-	            <label class="radio-inline">
-	                <input type="radio" id="url-radio" name="structure" value="custom"
-                    <% if params[:uri_structure] == "custom" %> checked="checked"
-	                <% end %>
-	                    > URL
-	                    <a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com"
-                         data-trigger="hover focus" data-placement="bottom">
-                            <span id="url-question" class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span>
-                        </a>
-	            </label>
-	            <label class="checkbox-inline">
-	                <input type="checkbox" name="show_reblogs" value="true"
-                    <% if params[:show_reblogs] %> checked="checked"
-	                <%end %>
-	                    > Reblogs?
-	            </label>
-	        </div>
-	        <div class="form-group">
-                <%= select_tag "post_types", options_for_select(AVAILABLE_TYPES.collect { |a| [a.capitalize, a] } ,
-                 params[:post_types].present? ? params[:post_types] : "photo"),
-                  multiple:true, class:"form-control" %>
-	        </div>
-        </div>
-    </div>
+  </div>
 <% end %>
 </div>
