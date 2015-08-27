@@ -7,7 +7,7 @@ module SearchHelper
 
 	def custom_checkbox_tag
 		label_tag yield, nil, class: 'checkbox-inline' do
-			box = check_box_tag "types[]", yield
+			box = check_box_tag "post_types[]", yield
 			box + " " + yield.upcase
 		end
 	end

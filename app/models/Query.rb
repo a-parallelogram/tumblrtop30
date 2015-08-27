@@ -1,9 +1,15 @@
 class Query
 	include ActiveAttr::Model
-	attr_accessor :query, :structure, :blog_url, :api_url, :post_type, :number_of_posts, :show_reblogs
-	validates :post_type, :inclusion => { :in => AVAILABLE_TYPES, :message => "Not a correct post type" }
+	attr_accessor :query, :structure, :blog_url, :api_url, :post_types, :number_of_posts, :show_reblogs
 	validates :structure, :inclusion => { :in => %w{standard custom}, :message => "Only normal and custom URI structures are allowed" }
 	validates :query, presence: { :message => "Search field is empty"}
+	validate :validate_post_types
+
+	def validate_post_types
+		if !post_types.is_a?(Array) || post_types.detect{ |a| !AVAILABLE_TYPES.include?(a) }
+			errors.add(:post_types, "You must select a post type")
+		end
+	end
 
 	#Returns true if blog url leads to a valid blog, otherwise returns false
 	#Check if query is valid before executing this method
