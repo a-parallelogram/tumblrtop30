@@ -27,13 +27,9 @@ class BlogJob < ProgressJob::Base
 		    i = 0
 		    temp_posts = Array.new
 				loop do
-					if post_type == "all"
-						temp_posts = (myClient.posts(search_query, "reblog_info" => !show_reblogs, "offset" => i ))["posts"]
-
-			    	else
-			    		temp_posts = (myClient.posts(search_query, :type => post_type, "reblog_info" => !show_reblogs, "offset" => i ) )["posts"]
-			    	end
-
+					
+		    		temp_posts = (myClient.posts(search_query, :type => post_type, "reblog_info" => !show_reblogs, "offset" => i ) )["posts"]
+			    	
 			    	#Increment by 50 bc need to increase offset for request. only 20 posts returned at a time.
 			    	i = i + 20
 			    	update_progress(step: temp_posts.length)
