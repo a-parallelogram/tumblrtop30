@@ -31,6 +31,9 @@ $(document).ready(function() {
         $("#options-button span").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
     });
 
+    //prevent URL option from being selected when question mark is clicked
+    $("#url-question").click(function(event){event.preventDefault();})
+
 });
 </script>
 <div style="margin-top:20px;">
@@ -57,13 +60,15 @@ $(document).ready(function() {
 	                <input type="radio" id="name-radio" name="structure" value="standard" checked="checked"> Name
 	            </label>
 	            <label class="radio-inline">
-	                <input type="radio" id="url-radio" name="structure" value="custom" <% if params[:uri_structure] == "custom" %> checked="checked"
-	                <%end %>
+	                <input type="radio" id="url-radio" name="structure" value="custom"
+                    <% if params[:uri_structure] == "custom" %> checked="checked"
+	                <% end %>
 	                    > URL
 	                    <a tabindex="0" role="button" data-toggle="popover" data-content="Use this for blogs that don't end with .tumblr.com" data-trigger="hover focus" data-placement="bottom"><span id="url-question" class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span></a>
 	            </label>
 	            <label class="checkbox-inline">
-	                <input type="checkbox" name="show_reblogs" value="true" <% if params[:show_reblogs] %> checked="checked"
+	                <input type="checkbox" name="show_reblogs" value="true"
+                    <% if params[:show_reblogs] %> checked="checked"
 	                <%end %>
 	                    > Reblogs?
 	            </label>
