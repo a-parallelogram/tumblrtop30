@@ -11,7 +11,7 @@ class BlogJob < ProgressJob::Base
 		blog = Blog.find(@id)
 	    search_query = blog.name
 	    show_reblogs = blog.reblogs
-	    post_type = blog.post_type
+	    post_types = blog.post_types
 
 		# Create new client to make requests to Tumblr API
     	myClient = Tumblr::Client.new
@@ -22,27 +22,28 @@ class BlogJob < ProgressJob::Base
 	    #final post array
 	    posts = Array.new
 
-	    #temp variables for loop
-	    i = 0
-	    temp_posts = Array.new
-    	loop do
-    		if @post_type == "all"
-    			temp_posts = (myClient.posts(search_query, "reblog_info" => !show_reblogs, "offset" => i ))["posts"]
+	    post_types.each do |post_type|
+		    #temp variables for loop
+		    i = 0
+		    temp_posts = Array.new
+				loop do
+					if post_type == "all"
+						temp_posts = (myClient.posts(search_query, "reblog_info" => !show_reblogs, "offset" => i ))["posts"]
 
-	    	else
-	    		temp_posts = (myClient.posts(search_query, :type => post_type, "reblog_info" => !show_reblogs, "offset" => i ) )["posts"]
-	    	end
+			    	else
+			    		temp_posts = (myClient.posts(search_query, :type => post_type, "reblog_info" => !show_reblogs, "offset" => i ) )["posts"]
+			    	end
 
-	    	#Increment by 50 bc need to increase offset for request. only 20 posts returned at a time.
-	    	i = i + 20
-	    	update_progress(step: temp_posts.length)
-	    	update_stage (posts.length.to_s + "/" + @numberOfPosts.to_s + " blog posts processed")
-	    	
-	    	#add the fetched posts to the final post array, break if no posts were received
-	    	break if temp_posts.blank?
-	    	posts += temp_posts
-    	end
-   		
+			    	#Increment by 50 bc need to increase offset for request. only 20 posts returned at a time.
+			    	i = i + 20
+			    	update_progress(step: temp_posts.length)
+			    	update_stage (posts.length.to_s + "/" + @numberOfPosts.to_s + " blog posts processed")
+			    	
+			    	#add the fetched posts to the final post array, break if no posts were received
+			    	break if temp_posts.blank?
+			    	posts += temp_posts
+				end
+   		end
 		#Ignore reblogs if user doesn't want reblogs
 		if !@show_reblogs
 			posts = posts.select {|x| x["reblogged_from_id"] == nil}
