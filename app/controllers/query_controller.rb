@@ -14,7 +14,7 @@ class QueryController < ApplicationController
 			end
 			flash[:danger] = error_message
 			#Remember search parameters so user doesn't need to reenter them
-			redirect_to :controller => 'welcome', :action => 'index', :uri_structure => params[:structure], :post_type => params[:post_type], :show_reblogs => params[:show_reblogs]
+			redirect_to :controller => 'welcome', :action => 'index', :uri_structure => params[:structure], :post_type => params[:post_type], :show_reblogs => params[:show_reblogs], :post_types => params[:post_types]
 		end
 	end
 	
