@@ -1,4 +1,5 @@
 module BlogsHelper
+  #Renders the posts depending on post type. Used in the show blog page
   def post_renderer(post)
     post_type = post["type"]
     case post_type

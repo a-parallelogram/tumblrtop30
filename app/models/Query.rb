@@ -5,6 +5,7 @@ class Query
   validates :query, presence: { :message => "Search field is empty"}
   validate :validate_post_types
 
+  #Checks if user has sent valid post types
   def validate_post_types
     if !post_types.is_a?(Array) || post_types.detect{ |a| !AVAILABLE_TYPES.include?(a) }
       errors.add(:post_types, "You must select a post type")

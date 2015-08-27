@@ -4,11 +4,13 @@ class BlogsController < ApplicationController
   def show
   end
 
+  #Renders the job's position within the queue, in plain text
   def position_in_queue
   	rank = Delayed::Job.all.order(id: :asc).pluck(:id).index(@blog.job_id)
   	render plain: rank
   end
 
+  #shows waiting page as job executes
   def waiting
     #In case user navigates to waiting page and job is already complete, direct them to show page
     unless @blog.posts.blank? && Delayed::Job.find_by(id: @blog.job_id) != nil

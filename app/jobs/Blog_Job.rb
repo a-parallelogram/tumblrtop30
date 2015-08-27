@@ -1,9 +1,9 @@
 class BlogJob < ProgressJob::Base 
-
-  def initialize(id, numberOfPosts)
-    super progress_max: numberOfPosts
+  #Parameters are id of blog and total number of posts for blog
+  def initialize(id, number_of_posts)
+    super progress_max: number_of_posts
     @id = id
-    @numberOfPosts = numberOfPosts
+    @number_of_posts = number_of_posts
   end
 
   def perform 
@@ -17,7 +17,7 @@ class BlogJob < ProgressJob::Base
     myClient = Tumblr::Client.new
     
     
-    update_stage ("Searching " + 0.to_s + "/" + @numberOfPosts.to_s + " blog posts...")
+    update_stage ("Searching " + 0.to_s + "/" + @number_of_posts.to_s + " blog posts...")
 
     #final post array
     posts = Array.new
@@ -33,7 +33,7 @@ class BlogJob < ProgressJob::Base
           #Increment by 50 bc need to increase offset for request. only 20 posts returned at a time.
           i = i + 20
           update_progress(step: temp_posts.length)
-          update_stage (posts.length.to_s + "/" + @numberOfPosts.to_s + " blog posts processed")
+          update_stage (posts.length.to_s + "/" + @number_of_posts.to_s + " blog posts processed")
           
           #add the fetched posts to the final post array, break if no posts were received
           break if temp_posts.blank?

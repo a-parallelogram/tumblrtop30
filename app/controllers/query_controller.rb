@@ -1,5 +1,7 @@
 class QueryController < ApplicationController
 
+  #Creates a new query variable containing user parameters.
+  # If query is valid, job is created. If invalid, user redirected to home page and shown errors.
   def search
     q = Query.new(query: params[:search], structure: params[:structure], post_types: params[:post_types], show_reblogs: params[:show_reblogs])
     if q.valid? && q.does_blog_exist?
