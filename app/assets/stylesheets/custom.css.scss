@@ -8,3 +8,13 @@
 #url-question{
 	margin-right:10px;
 }
+
+/* http://stackoverflow.com/questions/15975968/twitter-bootstrap-inline-checkbox-alignment-issue */
+.checkbox-inline.no_indent,
+.checkbox-inline.no_indent+.checkbox-inline.no_indent {
+  margin-left: 0;
+  margin-right: 10px;
+}
+.checkbox-inline.no_indent:last-child {
+  margin-right: 0;
+}

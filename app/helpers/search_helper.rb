@@ -6,7 +6,7 @@ module SearchHelper
 	end
 
 	def custom_checkbox_tag
-		label_tag yield, nil, class: 'checkbox-inline' do
+		label_tag yield, nil, class: 'checkbox-inline no_indent' do
 			box = check_box_tag "post_types[]", yield,
 			yield == "photo" ? true : false,
 			:id => yield
