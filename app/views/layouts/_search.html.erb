@@ -69,7 +69,15 @@ $(document).ready(function() {
 	            </label>
 	        </div>
 	        <div class="form-group">
-                <%= create_post_type_checkboxes.html_safe %>
+                <select name="post_types[]" multiple class="form-control">
+                    <option value="photo" selected="selected">Photo</option>
+                    <option value="text">Text</option>
+                    <option value="quote">Quote</option>
+                    <option value="link">Link</option>
+                    <option value="chat">Chat</option>
+                    <option value="audio">Audio</option>
+                    <option value="video">Video</option>
+                </select>
 	        </div>
         </div>
     </div>
