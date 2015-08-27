@@ -1,6 +1,6 @@
 <%= render 'layouts/search' %>
 <div class="page-header"><h1><%= link_to @blog.name, "http://#{@blog.name}", target: "_blank" %>
-	<small><%= @blog.post_types.map{|a| a.upcase }.join " : " %><% unless @blog.reblogs %> : NO REBLOGS<% end %></small></h1></div>
+	<small class='text-uppercase'><%= @blog.post_types.join " : " %><% unless @blog.reblogs %> : NO REBLOGS<% end %></small></h1></div>
 
 <% if @blog.posts.present? %>
 	<table class="table">
