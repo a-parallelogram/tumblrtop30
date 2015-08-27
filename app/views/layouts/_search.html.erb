@@ -69,7 +69,7 @@ $(document).ready(function() {
 	            </label>
 	        </div>
 	        <div class="form-group">
-	            <%= select_tag :post_type, options_for_select(AVAILABLE_TYPES, :selected => params[:post_type]), class: "form-control" %>
+                <%= create_post_type_checkboxes.html_safe %>
 	        </div>
         </div>
     </div>
