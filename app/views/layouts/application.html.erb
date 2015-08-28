@@ -10,10 +10,16 @@
 </head>
 <body>
 <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
 <div class="container">
 <%= yield %>
 </div>
 </body>
+
+<footer class="footer">
+  <div class="container">
+    <p class="center"><a href="https://github.com/a-parallelogram/tumblrtop30" target="_blank" class="btn btn-default" role="button">Check me out on GitHub!<%= image_tag "Octocat.png", width: "30px", height: "30px", alt: ":Octocat:" %></a></p>
+  </div>
+</footer>
 </html>
