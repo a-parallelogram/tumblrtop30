@@ -57,8 +57,6 @@ gem 'delayed_job_active_record'
 
 gem 'progress_job'
 
-gem "workless"
-
 gem 'daemons'
 
 gem "active_attr"
