@@ -1,6 +1,6 @@
 ## Synopsis
 
-Discovers the top 30 posts of any Tumblr blog, using the number of notes per post as a metric. Working example [here](https://polar-forest-5071.herokuapp.com/).
+Discovers the top 30 posts of any Tumblr blog, using the number of notes per post as a metric. Working example [here](https://tumblrtop30.herokuapp.com/).
 
 ## How it works
 
