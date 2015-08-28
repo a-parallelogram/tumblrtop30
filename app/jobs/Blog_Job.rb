@@ -45,9 +45,9 @@ class BlogJob < ProgressJob::Base
       posts = posts.select {|x| x["reblogged_from_id"] == nil}
     end
 
-    #Don't include posts that don't have note_count, or else error will be raised
+    #Don't include posts that don't have note_count (raises error when sorting), or a note_count of 0
     #Sort by descending note count, and return first 30
-    blog.update(posts: posts.delete_if {|x| x["note_count"].nil? }.sort_by {|x| x["note_count"] }.reverse![0,30])
+    blog.update(posts: posts.delete_if {|x| x["note_count"].nil? || x["note_count"] == 0 }.sort_by {|x| x["note_count"] }.reverse![0,30])
 
     update_progress_max(100)
   end
