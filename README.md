@@ -15,6 +15,13 @@ This Ruby on Rails application sends requests to the [Tumblr API](https://www.tu
 
 A friend of mine wanted a tool to find the top posts of Tumblr blogs, and I wanted to learn more Ruby on Rails, so I decided to create this application.
 
+## References
+* [Tumblr Ruby Gem](https://github.com/tumblr/tumblr_client)
+* [Delayed::Job](https://github.com/collectiveidea/delayed_job)
+* [Progress Job](https://github.com/d4be4st/progress_job)
+* [ActiveAttr](https://github.com/cgriego/active_attr)
+* [Bootstrap Sass](https://github.com/twbs/bootstrap-sass)
+
 ## License
 
 This project is licensed under the terms of the MIT license.
