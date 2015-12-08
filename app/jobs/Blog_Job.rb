@@ -1,7 +1,7 @@
 class BlogJob < ProgressJob::Base
 
   #Number of threads used to send requests to API
-  THREAD_COUNT = 5
+  THREAD_COUNT = 4
   #Parameters are id of blog and total number of posts for blog
   def initialize(id, number_of_posts)
     super progress_max: number_of_posts
